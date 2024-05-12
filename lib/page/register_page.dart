@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/button.dart';
 import 'package:social_media_app/components/text_field.dart';
@@ -14,6 +16,61 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final confirmPasswordTextController = TextEditingController();
+
+  // Sign user up
+  void signUp() async {
+    // show loading circle
+    showDialog(
+        context: context,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
+
+    // make sure passwords match
+    if (passwordTextController.text != confirmPasswordTextController.text) {
+      // pop loading circle
+      Navigator.pop(context);
+
+      // show error to user
+      displayMessage("Passwords don't match!");
+      return;
+    }
+
+    // try creating the user
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailTextController.text.trim(),
+              password: passwordTextController.text.trim());
+      // after creating the user, create a new document in cloud firestore called Users
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({
+        'username': emailTextController.text.split('@')[0], // Initial username
+        'bio': 'Empty bio..', // Initally empty bio
+        // add any additional fields as needed
+      });
+      // pop loading circle
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // pop loading circle
+      Navigator.pop(context);
+
+      //display error message
+      displayMessage(e.code);
+    }
+  }
+
+  // Display a dialog message
+  void displayMessage(String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(message),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 25,
               ),
               //Sign in Button
-              MyButton(onTap: () {}, text: 'Sign Up'),
+              MyButton(onTap: signUp, text: 'Sign Up'),
               const SizedBox(
                 height: 25,
               ),

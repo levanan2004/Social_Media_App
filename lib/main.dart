@@ -6,6 +6,8 @@ import 'package:social_media_app/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // In MyApp
   runApp(const MyApp());
 }
 
@@ -17,6 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      // theme: ThemeData(
+      //     primarySwatch: Colors.blue,
+      //     iconTheme: Theme.of(context).iconTheme.copyWith(
+      //           color: Colors.white,
+      //         )),
       home: AuthPage(),
     );
   }
