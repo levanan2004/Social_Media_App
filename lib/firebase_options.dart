@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC8R8bnD7jjjqBBqxNtFlb7gwrOgJaje8A',
-    appId: '1:497427051791:web:16d40a03646344fce27a7a',
-    messagingSenderId: '497427051791',
-    projectId: 'socialmediaapp-24da5',
-    authDomain: 'socialmediaapp-24da5.firebaseapp.com',
-    storageBucket: 'socialmediaapp-24da5.appspot.com',
-    measurementId: 'G-6FGWETJL02',
+    apiKey: 'AIzaSyAgx3bogZUP66DPgBDe8IhTYzrpur_RgfI',
+    appId: '1:247070538086:web:873a80e06c431a8821f0a7',
+    messagingSenderId: '247070538086',
+    projectId: 'socialmedia-3f4f1',
+    authDomain: 'socialmedia-3f4f1.firebaseapp.com',
+    storageBucket: 'socialmedia-3f4f1.appspot.com',
+    measurementId: 'G-R69VXT9M1L',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDJpQ5LwEA2GpzqnwC8x3yvsRARNwwXKYg',
-    appId: '1:497427051791:android:d44915bacdaec3b2e27a7a',
-    messagingSenderId: '497427051791',
-    projectId: 'socialmediaapp-24da5',
-    storageBucket: 'socialmediaapp-24da5.appspot.com',
+    apiKey: 'AIzaSyCyideR2VrkLYJ39m5HpeAHZvS4eC_r9_M',
+    appId: '1:247070538086:android:7d66ede751643ce421f0a7',
+    messagingSenderId: '247070538086',
+    projectId: 'socialmedia-3f4f1',
+    storageBucket: 'socialmedia-3f4f1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyByNYcD7DT6l1vBCASaYMs9PauJBy5cMcg',
-    appId: '1:497427051791:ios:8f44903447acbfe3e27a7a',
-    messagingSenderId: '497427051791',
-    projectId: 'socialmediaapp-24da5',
-    storageBucket: 'socialmediaapp-24da5.appspot.com',
+    apiKey: 'AIzaSyDoO-PyxwKMpUn2ZZRv0X5jTraiUyW8Aq8',
+    appId: '1:247070538086:ios:9955e27fc67077b521f0a7',
+    messagingSenderId: '247070538086',
+    projectId: 'socialmedia-3f4f1',
+    storageBucket: 'socialmedia-3f4f1.appspot.com',
     iosBundleId: 'com.example.socialMediaApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyByNYcD7DT6l1vBCASaYMs9PauJBy5cMcg',
-    appId: '1:497427051791:ios:8f44903447acbfe3e27a7a',
-    messagingSenderId: '497427051791',
-    projectId: 'socialmediaapp-24da5',
-    storageBucket: 'socialmediaapp-24da5.appspot.com',
+    apiKey: 'AIzaSyDoO-PyxwKMpUn2ZZRv0X5jTraiUyW8Aq8',
+    appId: '1:247070538086:ios:9955e27fc67077b521f0a7',
+    messagingSenderId: '247070538086',
+    projectId: 'socialmedia-3f4f1',
+    storageBucket: 'socialmedia-3f4f1.appspot.com',
     iosBundleId: 'com.example.socialMediaApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyC8R8bnD7jjjqBBqxNtFlb7gwrOgJaje8A',
-    appId: '1:497427051791:web:33442fa61fe2c71ae27a7a',
-    messagingSenderId: '497427051791',
-    projectId: 'socialmediaapp-24da5',
-    authDomain: 'socialmediaapp-24da5.firebaseapp.com',
-    storageBucket: 'socialmediaapp-24da5.appspot.com',
-    measurementId: 'G-5GQ1KQB2C5',
+    apiKey: 'AIzaSyAgx3bogZUP66DPgBDe8IhTYzrpur_RgfI',
+    appId: '1:247070538086:web:7faee229bac1807a21f0a7',
+    messagingSenderId: '247070538086',
+    projectId: 'socialmedia-3f4f1',
+    authDomain: 'socialmedia-3f4f1.firebaseapp.com',
+    storageBucket: 'socialmedia-3f4f1.appspot.com',
+    measurementId: 'G-Q83NLFLZ8R',
   );
+
 }
