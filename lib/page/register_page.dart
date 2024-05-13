@@ -52,9 +52,11 @@ class _RegisterPageState extends State<RegisterPage> {
         // add any additional fields as needed
       });
       // pop loading circle
+      // ignore: use_build_context_synchronously
       if (context.mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // pop loading circle
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
 
       //display error message

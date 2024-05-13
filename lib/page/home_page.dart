@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/components/drawer.dart';
 import 'package:social_media_app/components/text_field.dart';
 import 'package:social_media_app/components/wall_post.dart';
+import 'package:social_media_app/helper/helper_methods.dart';
 import 'package:social_media_app/page/profile_page.dart';
+import 'package:social_media_app/page/setting_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,20 +54,34 @@ class _HomePageState extends State<HomePage> {
         context, MaterialPageRoute(builder: (context) => const ProfilePage()));
   }
 
+  // Navigate to setting page
+  void goToSettingPage() {
+    // pop menu drawer
+    Navigator.pop(context);
+
+    // go to profile page
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-          backgroundColor: Colors.grey[900],
+          backgroundColor: Theme.of(context).colorScheme.onBackground,
           title: const Center(
-            child: Text(
-              "The Wall",
-              style: TextStyle(color: Colors.white),
+            child: Padding(
+              padding: EdgeInsets.only(right: 50),
+              child: Text(
+                "The Wall",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           )),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
+        onSettingTap: goToSettingPage,
         onLogOut: signOut,
       ),
       body: Center(
@@ -90,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                           user: post['UserEmail'],
                           postId: post.id,
                           likes: List<String>.from(post['Likes'] ?? []),
+                          time: formatDate(post['TimeStamp']),
                         );
                       });
                 } else if (snapshot.hasError) {
