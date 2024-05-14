@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/text_box.dart';
@@ -25,29 +26,29 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context) => AlertDialog(
               backgroundColor: Colors.grey[900],
               title: Text(
-                "Edit $field",
+                "Edit Username".tr(),
                 style: const TextStyle(color: Colors.white),
               ),
               content: TextField(
                 autofocus: true,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                    hintText: "Enter new $field",
+                    hintText: "Enter new username".tr(),
                     hintStyle: const TextStyle(color: Colors.grey)),
                 onChanged: (value) => {newValue = value},
               ),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.white),
+                    child: Text(
+                      "Cancel".tr(),
+                      style: const TextStyle(color: Colors.white),
                     )),
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(newValue),
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(color: Colors.white),
+                    child: Text(
+                      "Save".tr(),
+                      style: const TextStyle(color: Colors.white),
                     ))
               ],
             ));
@@ -62,9 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile Page",
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          "Profile Page".tr(),
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.grey[900],
       ),
@@ -104,19 +105,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 25),
                     child: Text(
-                      "My Details",
+                      "My Details".tr(),
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ),
                   // UserName
                   MyTextBox(
                       text: userData['username'],
-                      sectionName: 'username',
+                      sectionName: "username".tr(),
                       onPressed: () => editField('username')),
                   // Bio
                   MyTextBox(
                       text: userData['bio'],
-                      sectionName: 'bio',
+                      sectionName: "bio".tr(),
                       onPressed: () => editField('bio')),
                   const SizedBox(
                     height: 50,
@@ -125,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 25),
                     child: Text(
-                      "My Posts",
+                      "My Posts".tr(),
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/my_list_tile.dart';
 
@@ -30,17 +31,17 @@ class MyDrawer extends StatelessWidget {
               //Home list tile
               MyListTile(
                 icon: Icons.home,
-                text: "H O M E",
+                text: "H O M E".tr(),
                 onTap: () => Navigator.pop(context),
               ),
               // Profile list tile
               MyListTile(
                   icon: Icons.person,
-                  text: "P R O F I L E",
+                  text: "P R O F I L E".tr(),
                   onTap: onProfileTap),
               MyListTile(
                   icon: Icons.settings,
-                  text: "S E T T I N G",
+                  text: "S E T T I N G".tr(),
                   onTap: onSettingTap),
             ],
           ),
@@ -48,7 +49,7 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 25),
             child: MyListTile(
-                icon: Icons.logout, text: "L O G O U T", onTap: onLogOut),
+                icon: Icons.logout, text: "L O G O U T".tr(), onTap: onLogOut),
           )
         ],
       ),

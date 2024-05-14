@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/drawer.dart';
@@ -70,13 +71,13 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.onBackground,
-          title: const Center(
+          title: Center(
             child: Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text(
-                "The Wall",
+              padding: const EdgeInsets.only(right: 50),
+              child: const Text(
+                "Message All",
                 style: TextStyle(color: Colors.white),
-              ),
+              ).tr(),
             ),
           )),
       drawer: MyDrawer(
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                       child: MyTextField(
                     controller: textController,
-                    hintText: "Write something on the wall",
+                    hintText: "Write something on Message All".tr(),
                     obscureText: false,
                   )),
                   // Post Button
@@ -139,9 +140,9 @@ class _HomePageState extends State<HomePage> {
             ),
             // Logged in as
             Text(
-              'Logged in as: ${currentUser.email!}',
+              "Logged in as:${currentUser.email!}",
               style: const TextStyle(color: Colors.grey),
-            ),
+            ).tr(),
             const SizedBox(
               height: 50,
             )

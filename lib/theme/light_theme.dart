@@ -7,6 +7,7 @@ ThemeData lightTheme = ThemeData(
       primary: Colors.white,
       secondary: Colors.grey[200]!,
       onBackground: Colors.grey[400]!,
+      inversePrimary: Colors.grey[500]!,
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(foregroundColor: Colors.black)));
