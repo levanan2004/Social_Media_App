@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/button.dart';
@@ -76,77 +77,85 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.deepPurple[100],
       body: SafeArea(
           child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //logo
-              const Icon(
-                Icons.lock,
-                size: 100,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              //welcome back message
-              Text("Lets create an account for you",
-                  style: TextStyle(color: Colors.grey[700])),
-              const SizedBox(
-                height: 25,
-              ),
-              //email TextField
-              MyTextField(
-                  controller: emailTextController,
-                  hintText: 'Email',
-                  obscureText: false),
-              const SizedBox(
-                height: 10,
-              ),
-              //Password textField
-              MyTextField(
-                  controller: passwordTextController,
-                  hintText: 'Password',
-                  obscureText: true),
-              const SizedBox(
-                height: 10,
-              ),
-              //Confirm Password textField
-              MyTextField(
-                  controller: confirmPasswordTextController,
-                  hintText: 'Confirm Password',
-                  obscureText: true),
-              const SizedBox(
-                height: 25,
-              ),
-              //Sign in Button
-              MyButton(onTap: signUp, text: 'Sign Up'),
-              const SizedBox(
-                height: 25,
-              ),
-              //Go to register page
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an account? ",
-                      style: TextStyle(color: Colors.grey[700])),
-                  GestureDetector(
-                    onTap: widget.onTap,
-                    child: const Text(
-                      " Login now",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue),
-                    ),
-                  )
-                ],
-              )
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //logo
+                const Icon(
+                  Icons.message_outlined,
+                  size: 100,
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                //welcome back message
+                Text("Lets create an account for you",
+                        style: TextStyle(color: Colors.grey[700]))
+                    .tr(),
+                const SizedBox(
+                  height: 25,
+                ),
+                //email TextField
+                MyTextField(
+                    controller: emailTextController,
+                    hintText: 'Email',
+                    obscureText: false),
+                const SizedBox(
+                  height: 10,
+                ),
+                //Password textField
+                MyTextField(
+                    controller: passwordTextController,
+                    hintText: "Password".tr(),
+                    obscureText: true),
+                const SizedBox(
+                  height: 10,
+                ),
+                //Confirm Password textField
+                MyTextField(
+                    controller: confirmPasswordTextController,
+                    hintText: "Confirm Password".tr(),
+                    obscureText: true),
+                const SizedBox(
+                  height: 25,
+                ),
+                //Sign in Button
+                MyButton(onTap: signUp, text: "Sign Up".tr()),
+                const SizedBox(
+                  height: 25,
+                ),
+                //Go to register page
+                _buildGoToRegisterPage()
+              ],
+            ),
           ),
         ),
       )),
+    );
+  }
+
+  Widget _buildGoToRegisterPage() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Already have an account? ",
+                style: TextStyle(color: Colors.grey[700]))
+            .tr(),
+        GestureDetector(
+          onTap: widget.onTap,
+          child: const Text(
+            " Login now",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+          ).tr(),
+        )
+      ],
     );
   }
 }

@@ -23,11 +23,16 @@ dependencies:
   google_fonts: ^6.2.1
   provider: ^6.1.2
   easy_localization: ^3.0.7
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/image/avatar.jpg"
 
 flutter:
 

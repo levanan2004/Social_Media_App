@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/text_box.dart';
+import 'package:social_media_app/components/wall_post.dart';
+import 'package:social_media_app/helper/helper_methods.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -59,88 +61,142 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // // Run buildMyPosts is first
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   buildMyPosts();
+  // }
+  // // After run buildMyPosts then delete all items in listMyPosts in buildMyPosts
+  // @override
+  // void dispose(){
+  //   super.dispose();
+  //   buildMyPosts();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile Page".tr(),
-          style: const TextStyle(color: Colors.white),
+        appBar: AppBar(
+          title: Text(
+            "Profile Page".tr(),
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.grey[900],
         ),
-        backgroundColor: Colors.grey[900],
-      ),
-      body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-              .doc(currentUser.email)
-              .snapshots(),
-          builder: (context, snapshot) {
-            // get user data
-            if (snapshot.hasData) {
-              final userData = snapshot.data!.data() as Map<String, dynamic>;
+        body: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(currentUser.email)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    // get user data
+                    if (snapshot.hasData) {
+                      final userData =
+                          snapshot.data!.data() as Map<String, dynamic>;
 
-              return ListView(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // Profile Picture
-                  const Icon(
-                    Icons.person,
-                    size: 72,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // User Email
-                  Text(
-                    currentUser.email!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // User Details
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Text(
-                      "My Details".tr(),
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ),
-                  // UserName
-                  MyTextBox(
-                      text: userData['username'],
-                      sectionName: "username".tr(),
-                      onPressed: () => editField('username')),
-                  // Bio
-                  MyTextBox(
-                      text: userData['bio'],
-                      sectionName: "bio".tr(),
-                      onPressed: () => editField('bio')),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // User Posts
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Text(
-                      "My Posts".tr(),
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error${snapshot.error}'),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
-    );
+                      return ListView(
+                        children: [
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          // Profile Picture
+                          const Icon(
+                            Icons.person,
+                            size: 72,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // User Email
+                          Text(
+                            currentUser.email!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          // User Details
+                          Padding(
+                            padding: const EdgeInsets.only(left: 25),
+                            child: Text(
+                              "My Details".tr(),
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ),
+                          // UserName
+                          MyTextBox(
+                              text: userData['username'],
+                              sectionName: "username".tr(),
+                              onPressed: () => editField('username')),
+                          // Bio
+                          MyTextBox(
+                              text: userData['bio'],
+                              sectionName: "bio".tr(),
+                              onPressed: () => editField('bio')),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          // User Posts
+                          Padding(
+                            padding: const EdgeInsets.only(left: 25),
+                            child: Text(
+                              "My Posts".tr(),
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error${snapshot.error}'),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }),
+            ),
+            Expanded(
+                child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('User Posts')
+                  .orderBy("TimeStamp", descending: false)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        //get the message
+                        final post = snapshot.data!.docs[index];
+                        if (post['UserEmail'].toString() ==
+                            currentUser.email.toString()) {
+                          return WallPost(
+                            message: post['Message'],
+                            user: post['UserEmail'],
+                            postId: post.id,
+                            likes: List<String>.from(post['Likes'] ?? []),
+                            time: formatDate(post['TimeStamp']),
+                          );
+                        }
+                        return null;
+                      });
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error:${snapshot.error}'),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )),
+          ],
+        ));
   }
 }

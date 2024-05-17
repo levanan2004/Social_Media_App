@@ -18,5 +18,20 @@
     "Enter new username": "Enter new username",
     "Cancel": "Cancel",
     "Save": "Save",
-    "Setting": "Setting"
+    "Setting": "Setting",
+    "Welcome back, you've been missed!": "Welcome back, you've been missed!",
+    "Password": "Password",
+    "Forget Password?": "Forget Password?",
+    "sign in": "sign in",
+    "Not a member? ": "Not a member? ",
+    " Register now": " Register now",
+    "Lets create an account for you": "Lets create an account for you",
+    "Confirm Password": "Confirm Password",
+    "Sign Up": "Sign Up",
+    "Already have an account? ": "Already have an account? ",
+    " Login now": " Login now",
+    "Delete": "Delete",
+    "Sure": "Sure",
+    "Delete Post": "Delete Post",
+    "Are you sure you want to delete this post?": "Are you sure you want to delete this post?"
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/comment.dart';
@@ -117,13 +118,14 @@ class _WallPostState extends State<WallPost> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Delete Post"),
-              content: const Text("Are you sure you want to delete this post?"),
+              title: const Text("Delete Post").tr(),
+              content:
+                  const Text("Are you sure you want to delete this post?").tr(),
               actions: [
                 // CANCEL BUTTON
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("Cancel")),
+                    child: const Text("Cancel").tr()),
 
                 // DELETE BUTTON
                 TextButton(
@@ -159,7 +161,7 @@ class _WallPostState extends State<WallPost> {
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
                     },
-                    child: const Text("Delete")),
+                    child: const Text("Sure").tr()),
               ],
             ));
   }
@@ -181,32 +183,7 @@ class _WallPostState extends State<WallPost> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // group of text(message + user email)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // message
-                  Text(
-                    widget.message,
-                    style: TextStyle(color: Colors.deepPurple.shade900),
-                  ),
-                  // user
-                  Row(
-                    children: [
-                      Text(
-                        widget.user,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        widget.time,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              _buildGroupOfText(),
               // Detele Button
               if (widget.user == currentUser.email)
                 DeleteButton(onTap: deletePost)
@@ -215,75 +192,119 @@ class _WallPostState extends State<WallPost> {
           const SizedBox(
             height: 10,
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  // Like Button
-                  LikeButton(isLiked: isLiked, onTap: toggleLike),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // Like Count
-                  Text(
-                    widget.likes.length.toString(),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
+              // Like(tym) + Like Count
+              _buildIconLikeAndLikeCount(),
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                children: [
-                  // Comment Button
-                  CommentButton(onTap: showCommentDialog),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // Comment count
-                  Text(
-                    widget.likes.length.toString(),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
+              // Icon Comment + Comment Count
+              _buildIconCommentAndCommentCount()
             ],
           ),
 
-          // Comments under the post
-          StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("User Posts")
-                  .doc(widget.postId)
-                  .collection("Comments")
-                  .orderBy("CommentTime", descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                // show loading circle if no data yet
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return ListView(
-                  shrinkWrap: true, // for nested lists
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: snapshot.data!.docs.map((doc) {
-                    // get the comment
-                    final commentData = doc.data() as Map<String, dynamic>;
-
-                    // return the comment
-                    return Comment(
-                        text: commentData['CommentText'],
-                        user: commentData['CommentBy'],
-                        time: formatDate(commentData['CommentTime']));
-                  }).toList(),
-                );
-              })
+          // Comments under the post(COMMENT!!!)
+          _buildComment()
         ],
       ),
     );
+  }
+
+  Widget _buildGroupOfText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // message
+        Text(
+          widget.message,
+          style: TextStyle(color: Colors.deepPurple.shade900),
+        ),
+        // user
+        Row(
+          children: [
+            Text(
+              widget.user,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              widget.time,
+              style: const TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIconLikeAndLikeCount() {
+    return Column(
+      children: [
+        // Like Button
+        LikeButton(isLiked: isLiked, onTap: toggleLike),
+        const SizedBox(
+          height: 5,
+        ),
+        // Like Count
+        Text(
+          widget.likes.length.toString(),
+          style: const TextStyle(color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIconCommentAndCommentCount() {
+    return Column(
+      children: [
+        // Comment Button
+        CommentButton(onTap: showCommentDialog),
+        const SizedBox(
+          height: 5,
+        ),
+        // Comment count
+        Text(
+          widget.likes.length.toString(),
+          style: const TextStyle(color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildComment() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("User Posts")
+            .doc(widget.postId)
+            .collection("Comments")
+            .orderBy("CommentTime", descending: true)
+            .snapshots(),
+        builder: (context, snapshot) {
+          // show loading circle if no data yet
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            shrinkWrap: true, // for nested lists
+            physics: const NeverScrollableScrollPhysics(),
+            children: snapshot.data!.docs.map((doc) {
+              // get the comment
+              final commentData = doc.data() as Map<String, dynamic>;
+
+              // return the comment
+              return Comment(
+                  text: commentData['CommentText'],
+                  user: commentData['CommentBy'],
+                  time: formatDate(commentData['CommentTime']));
+            }).toList(),
+          );
+        });
   }
 }

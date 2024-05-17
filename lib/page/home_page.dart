@@ -76,7 +76,8 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(right: 50),
               child: const Text(
                 "Message All",
-                style: TextStyle(color: Colors.white),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ).tr(),
             ),
           )),
@@ -140,11 +141,11 @@ class _HomePageState extends State<HomePage> {
             ),
             // Logged in as
             Text(
-              "Logged in as:${currentUser.email!}",
+              "Logged in as:${currentUser.email!}".tr(),
               style: const TextStyle(color: Colors.grey),
-            ).tr(),
+            ),
             const SizedBox(
-              height: 50,
+              height: 10,
             )
           ],
         ),

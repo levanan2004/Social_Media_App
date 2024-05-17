@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DeleteButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class DeleteButton extends StatelessWidget {
           child: Text(
             "Delete",
             style: TextStyle(color: Colors.grey[500]),
-          ),
+          ).tr(),
         ));
   }
 }
